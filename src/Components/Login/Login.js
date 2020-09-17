@@ -15,8 +15,9 @@ const Login = () => {
 
   let { from } = location.state || { from: { pathname: "/" } };
 
+    const [formFields, setFormFields] = useState(``);
     const [loggedInUser, setLoggedInUser] = useContext(UserContext);
-    // const [newUser, setNewUser] = useState(false);
+    const [newUser, setNewUser] = useState(true);
     const [user, setUser] = useState({
         isSignedIn: false,
         name: '',
@@ -61,7 +62,35 @@ const Login = () => {
             // ...
         });
     }
-    
+        // const newFormFields = `
+        //     <h4>Create an Account</h4>
+        //     <input placeholder="First Name" type="text" name="First Name"/>
+        //     <br/>
+        //     <input placeholder="Last Name" type="text" name="Last Name"/>
+        //     <br/>
+        //     <input placeholder="UserName or Email" type="text" name="Username or Email"/>
+        //     <br/>
+        //     <input placeholder="Password" type="password" name="password"/>
+        //     <br/>
+        //     <input placeholder="Confirm Password" type="text" name="Confirm Password"/>
+        //     <br/>
+        //     `;
+        //     document.querySelector('.booking-login-form').insertAdjacentHTML('afterbegin', newFormFields)
+    // const handleUser = (e) => {
+    //     e.preventDefault();
+    //     setNewUser(true);
+    //     console.log(newUser)
+    //     if (newUser) {
+            
+    //         console.log(newUser)
+    //     } else {
+
+    //     }
+    // }
+    const handleUser = (e) => {
+        e.preventDefault();
+        setNewUser(!newUser);
+    }
     return (
         <Container>
             <NavigationBar background="white"></NavigationBar>
@@ -69,21 +98,30 @@ const Login = () => {
             <p>Signed In User Name: {user.name}</p>
             <div className="login-form-container">
                 <form action="" className="booking-login-form" onSubmit="dosomething">
-                    <h4>Create an Account</h4>
+                    <h4>{newUser ? "Create an Account" : "Login"}</h4>
+                    {newUser?
+                    <> 
                     <input placeholder="First Name" type="text" name="First Name"/>
                     <br/>
                     <input placeholder="Last Name" type="text" name="Last Name"/>
-                    <br/>
+                    <br/> </>
+                    :
+                    ""
+                    }
                     <input placeholder="UserName or Email" type="text" name="Username or Email"/>
                     <br/>
                     <input placeholder="Password" type="password" name="password"/>
                     <br/>
-                    <input placeholder="Confirm Password" type="text" name="Confirm Password"/>
+                    {newUser ? <input placeholder="Confirm Password" type="text" name="Confirm Password"/> : ""}
                     <br/>
-                    <input className="sumit-btn" type="submit" value="Submit" />
-                    <p>Already have and account? <button>Login</button></p>
+                    <input className="submit-btn" type="submit" value={newUser? "Create Account" : "Login"} />
+                    { newUser ? <p style={{textAlign: "center"}}>Already have an account? <button className="user-identifier-btn" onClick={handleUser}>Login</button></p>:<p style={{textAlign: "center"}}>Don't have an Account?<button className="user-identifier-btn" onClick={handleUser}>Create Account</button></p>}
                 </form>
-                <button onClick={handleGoogleSignIn}>Sign in with Google</button>
+                <span className="login-options-divider"><hr />Or<hr /></span>
+                <br />
+                <button className="alternative-login-button" onClick={handleGoogleSignIn}>Continue with Google</button>
+                <br />
+                <button className="alternative-login-button" onClick={handleGoogleSignIn}>Continue with Google</button>
             </div>
         </Container>
     );

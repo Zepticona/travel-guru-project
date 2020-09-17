@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { fakeData } from '../../fakeData/fakeData';
+import './tourIntro.css'
 
 const TourIntro = (props) => {
     // console.log(props.tour)

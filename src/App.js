@@ -35,6 +35,9 @@ function App() {
         <PrivateRoute path="/search">
           <Search></Search>
         </PrivateRoute>
+        <Route path="/searchTest">
+          <Search></Search>
+        </Route>
         <Route exact path="/">
           <Home></Home>
         </Route>

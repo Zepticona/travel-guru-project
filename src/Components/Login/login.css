@@ -1,5 +1,8 @@
+.login-form-container {
+    text-align: center;
+}
 .booking-login-form {
-    border: 1px solid black;
+    box-shadow: 0px 0px 2px 0px grey;
     width: 400px;
     margin: 0 auto;
     padding: 30px;
@@ -13,9 +16,34 @@
     border-bottom: 1px solid grey;
     margin-bottom: 20px;
 }
-.booking-login-form input.sumit-btn {
+.booking-login-form input.submit-btn {
     background-color: #F9A51A;
     border-bottom: none;
     padding: 10px 30px;
     font-weight: 500;
+}
+.user-identifier-btn {
+    color: #F9A51A;
+    background: 0;
+    border: none;
+}
+.user-identifier-btn:hover {
+    text-decoration: underline;
+}
+.login-options-divider hr {
+    display: inline-block;
+    width: 100px;
+}
+.alternative-login-button {
+    border: 1px solid grey;
+    padding: 7px 20px;
+    width: 300px;
+    margin-bottom: 20px;
+    background: white;
+    border-radius: 40px;    
+}
+.user-identifier-btn:focus, 
+.alternative-login-button:focus,
+.booking-login-form input:focus {
+    outline: none;
 }
