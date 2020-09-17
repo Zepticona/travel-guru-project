@@ -1,0 +1,21 @@
+.booking-login-form {
+    border: 1px solid black;
+    width: 400px;
+    margin: 0 auto;
+    padding: 30px;
+}
+.booking-login-form h4 {
+    margin-bottom: 30px;
+}
+.booking-login-form input{
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid grey;
+    margin-bottom: 20px;
+}
+.booking-login-form input.sumit-btn {
+    background-color: #F9A51A;
+    border-bottom: none;
+    padding: 10px 30px;
+    font-weight: 500;
+}

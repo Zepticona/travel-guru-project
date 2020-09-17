@@ -6,6 +6,7 @@ import * as firebase from "firebase/app";
 import "firebase/auth";
 import firebaseConfig from './firebase.config';
 import { useHistory, useLocation } from 'react-router-dom';
+import './login.css'
 
 
 const Login = () => {
@@ -63,11 +64,12 @@ const Login = () => {
     
     return (
         <Container>
-            <NavigationBar></NavigationBar>
+            <NavigationBar background="white"></NavigationBar>
             <p>Signed In User Email: {user.email}</p>
             <p>Signed In User Name: {user.name}</p>
             <div className="login-form-container">
-                <form action="" onSubmit="dosomething">
+                <form action="" className="booking-login-form" onSubmit="dosomething">
+                    <h4>Create an Account</h4>
                     <input placeholder="First Name" type="text" name="First Name"/>
                     <br/>
                     <input placeholder="Last Name" type="text" name="Last Name"/>
@@ -78,7 +80,8 @@ const Login = () => {
                     <br/>
                     <input placeholder="Confirm Password" type="text" name="Confirm Password"/>
                     <br/>
-                    <input type="submit" value=""/>
+                    <input className="sumit-btn" type="submit" value="Submit" />
+                    <p>Already have and account? <button>Login</button></p>
                 </form>
                 <button onClick={handleGoogleSignIn}>Sign in with Google</button>
             </div>

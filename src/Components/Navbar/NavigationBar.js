@@ -5,7 +5,15 @@ import './navigationBar.css'
 import { Link } from 'react-router-dom';
 import Logo from '../../images/Logo.png'
 
-const NavigationBar = () => {
+const NavigationBar = (props) => {
+    console.log(props)
+    let textColor 
+    if(props.background === "white") {
+        textColor = {
+            color: "black",
+        }
+    }
+
     return (
             <div className="navbar-container">
                 <div className="site-logo">
@@ -17,19 +25,19 @@ const NavigationBar = () => {
                 <nav className="nav-items">
                     <ul>
                         <li>
-                            <Link className="nav-menu-item">News</Link>
+                            <Link style={textColor} className="nav-menu-item">News</Link>
                         </li>
                         <li>
-                            <Link className="nav-menu-item">Destination</Link>
+                            <Link style={textColor} className="nav-menu-item">Destination</Link>
                         </li>
                         <li>
-                            <Link className="nav-menu-item">Blog</Link>
+                            <Link style={textColor} className="nav-menu-item">Blog</Link>
                         </li>
                         <li>
-                            <Link className="nav-menu-item">Contact</Link>
+                            <Link style={textColor} className="nav-menu-item">Contact</Link>
                         </li>
                         <li>
-                            <Link className="nav-menu-item">Login</Link>
+                            <Link style={textColor} className="nav-menu-item">Login</Link>
                         </li>
                     </ul>
                 </nav>
