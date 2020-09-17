@@ -1,6 +1,8 @@
 import React from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 import NavigationBar from '../Navbar/NavigationBar';
+import GoogleMapReact from 'google-map-react';
+
 
 const Search = () => {
     return (
@@ -48,7 +50,17 @@ const Search = () => {
                     </Row>
                 </Col>
                 <Col md="6">
-                    
+                <GoogleMapReact
+                    bootstrapURLKeys={{ key: 'AIzaSyC77ulrIgdLIsS5LUO6GfTisihCyGWNCGA' }}
+                    defaultCenter={{
+                        lat: 59.95,
+                        lng: 30.33
+                      }}
+                    defaultZoom={10}
+                    yesIWantToUseGoogleMapApiInternals="true"
+                    >
+                </GoogleMapReact>
+                
                 </Col>
             </Row>
         </Container>
