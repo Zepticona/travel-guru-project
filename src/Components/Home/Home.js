@@ -23,7 +23,7 @@ const Home = () => {
         <div className="home-container">
             <Container fluid="xl">
                 <NavigationBar></NavigationBar>
-                <Row>
+                <Row className="all-spots-container">
                     <Col md="4">
                         <div className="tourist-spot-brief">
                             <h2>Cox'x Bazar</h2>
@@ -32,23 +32,23 @@ const Home = () => {
                             <Link to={`/tourist-spots/${tourSpots[0].destination}`}><button className="booking-btn">Booking &#8594;</button></Link>
                         </div>
                     </Col>
-                    <Col md="6">
-                        
+                    <Col md="8">
+                        <div className="tour-spots-images">
+                            {
+                                tourSpots.map( tourSpot => <Link onClick={() => handleImageClick(tourSpot)} to={`/tourist-spots/${tourSpot.destination}`}> <img src={require(`../../images/Image/${tourSpot.imgUrl}`)} alt=""/> </Link>)
+                            }
+                        </div>   
                     </Col>
                 </Row>
-                <div className="all-tours-container">
+                {/* <div className="all-tours-container">
                     <div className="tourist-spot-brief">
                         <h2>Cox'x Bazar</h2>
                         <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptas, at aut! Omnis eveniet mollitia adipisci, distinctio, veritatis quidem corrupti doloremque debitis praesentium qui eos inventore. Modi consequuntur corrupti deleniti et.</p>
-                        {/* <Link className="booking-btn"  component="button">Booking &#8594;</Link> */}
+                        
                         <Link to={`/tourist-spots/${tourSpots[0].destination}`}><button className="booking-btn">Booking &#8594;</button></Link>
                     </div>
-                    <div className="tour-spots-images">
-                        {
-                            tourSpots.map( tourSpot => <Link onClick={() => handleImageClick(tourSpot)} to={`/tourist-spots/${tourSpot.destination}`}> <img src={require(`../../images/Image/${tourSpot.imgUrl}`)} alt=""/> </Link>)
-                        }
-                    </div>
-                </div>
+                    
+                </div> */}
             </Container>
         </div>
     );
