@@ -10,12 +10,16 @@ import './login.css'
 
 
 const Login = () => {
+    // Initalizing firebase
+    if(firebase.apps.length === 0) {
+        firebase.initializeApp(firebaseConfig);
+    }
+    // Initalizing History and Location hooks for redirecting
     let history = useHistory();
     let location = useLocation();
+    let { from } = location.state || { from: { pathname: "/" } };
 
-  let { from } = location.state || { from: { pathname: "/" } };
-
-    const [formFields, setFormFields] = useState(``);
+    // States and Context for storing user information
     const [loggedInUser, setLoggedInUser] = useContext(UserContext);
     const [newUser, setNewUser] = useState(true);
     const [user, setUser] = useState({
@@ -25,17 +29,12 @@ const Login = () => {
         password: '',
     })
 
-    if(firebase.apps.length === 0) {
-        firebase.initializeApp(firebaseConfig);
-    }
     
+    // Google Login
     var googleProvider = new firebase.auth.GoogleAuthProvider();
-    
     const handleGoogleSignIn = () => {
         firebase.auth().signInWithPopup(googleProvider)
-        .then(function(result) {
-
-            // This gives you a Google Access Token. You can use it to access the Google API.
+        .then(result => {
             var token = result.credential.accessToken;
             // The signed-in user info.
             var user = result.user;
@@ -51,7 +50,7 @@ const Login = () => {
             history.replace(from)
             console.log(user)
             
-        }).catch(function(error) {
+        }).catch(error => {
             // Handle Errors here.
             var errorCode = error.code;
             var errorMessage = error.message;
@@ -62,35 +61,79 @@ const Login = () => {
             // ...
         });
     }
-        // const newFormFields = `
-        //     <h4>Create an Account</h4>
-        //     <input placeholder="First Name" type="text" name="First Name"/>
-        //     <br/>
-        //     <input placeholder="Last Name" type="text" name="Last Name"/>
-        //     <br/>
-        //     <input placeholder="UserName or Email" type="text" name="Username or Email"/>
-        //     <br/>
-        //     <input placeholder="Password" type="password" name="password"/>
-        //     <br/>
-        //     <input placeholder="Confirm Password" type="text" name="Confirm Password"/>
-        //     <br/>
-        //     `;
-        //     document.querySelector('.booking-login-form').insertAdjacentHTML('afterbegin', newFormFields)
-    // const handleUser = (e) => {
-    //     e.preventDefault();
-    //     setNewUser(true);
-    //     console.log(newUser)
-    //     if (newUser) {
-            
-    //         console.log(newUser)
-    //     } else {
 
-    //     }
-    // }
+    // Handle New User or Old User login
     const handleUser = (e) => {
         e.preventDefault();
         setNewUser(!newUser);
+        let firstName = document.querySelector('.first-name');
+        let lastName = document.querySelector('.last-name');
+        let rePassword = document.querySelector('.re-password');
+        let email = document.querySelector('.email');
+        let password = document.querySelector('.password');
+        if(firstName && lastName && rePassword) {
+            firstName.value = "";
+            lastName.value = "";
+            rePassword.value = ""
+        }        
+        email.value = "";
+        password.value = "";
+        const newUserInfo = {
+            isSignedIn: false,
+            name: '',
+            email: '',
+            password: '',
+        }
+        setUser(newUserInfo);
+        console.log(newUserInfo);
     }
+
+    // Create Password Based Account
+    const handlePasswordBasedAccount = (event, email, password) => {
+        console.log(event.target)
+        firebase.auth().createUserWithEmailAndPassword(email, password)
+        .catch( error=> {
+            // Handle Errors here.
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            // ...
+          });
+    }
+    
+    // Handle Blur
+    const handleBlur = e => {
+        console.log("Handle Blur was triggered.")
+        console.log(e.target.name, e.target.value)
+        let isFieldValid = true;
+        console.log(isFieldValid)
+        if (e.target.name === "firstName") {
+            isFieldValid = /^[a-zA-Z ]{2,30}$/.test(e.target.value)
+        }
+        if (e.target.name === "lastName") {
+            isFieldValid = /^[a-zA-Z ]{2,30}$/.test(e.target.value)
+        }
+        if(e.target.name === "email") {
+            const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            isFieldValid = regex.test(String(e.target.value).toLowerCase());
+        }
+        if(e.target.name === "password") {
+            const regex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/;
+            isFieldValid = regex.test(e.target.value);
+        }
+        if(e.target.name === "rePassword") {
+            const rePassword = document.querySelector('.re-password').value;
+            const password = document.querySelector('.password').value;
+            isFieldValid = password === rePassword;
+        }
+        console.log(isFieldValid)
+        if(isFieldValid) {
+            const newUserInfo = {...user};
+            newUserInfo[e.target.name] = e.target.value;
+            setUser(newUserInfo);
+            console.log(newUserInfo);
+        }
+    }
+    
     return (
         <Container>
             <NavigationBar background="white"></NavigationBar>
@@ -101,20 +144,20 @@ const Login = () => {
                     <h4>{newUser ? "Create an Account" : "Login"}</h4>
                     {newUser?
                     <> 
-                    <input placeholder="First Name" type="text" name="First Name"/>
+                    <input className="first-name" required onBlur={handleBlur} placeholder="First Name" type="text" name="firstName"/>
                     <br/>
-                    <input placeholder="Last Name" type="text" name="Last Name"/>
+                    <input className="last-name" required onBlur={handleBlur} placeholder="Last Name" type="text" name="lastName"/>
                     <br/> </>
                     :
                     ""
                     }
-                    <input placeholder="UserName or Email" type="text" name="Username or Email"/>
+                    <input className="email" required onBlur={handleBlur} placeholder="Email" type="text" name="email"/>
                     <br/>
-                    <input placeholder="Password" type="password" name="password"/>
+                    <input  required onBlur={handleBlur} placeholder="Password" type="password" name="password" className="password"/>
                     <br/>
-                    {newUser ? <input placeholder="Confirm Password" type="text" name="Confirm Password"/> : ""}
+                    {newUser ? <input required onBlur={handleBlur} placeholder="Confirm Password" type="password" name="rePassword" className="re-password"/> : ""}
                     <br/>
-                    <input className="submit-btn" type="submit" value={newUser? "Create Account" : "Login"} />
+                    <input onClick={handlePasswordBasedAccount} className="submit-btn" type="submit" value={newUser? "Create Account" : "Login"} />
                     { newUser ? <p style={{textAlign: "center"}}>Already have an account? <button className="user-identifier-btn" onClick={handleUser}>Login</button></p>:<p style={{textAlign: "center"}}>Don't have an Account?<button className="user-identifier-btn" onClick={handleUser}>Create Account</button></p>}
                 </form>
                 <span className="login-options-divider"><hr />Or<hr /></span>
