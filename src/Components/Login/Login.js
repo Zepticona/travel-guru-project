@@ -29,6 +29,30 @@ const Login = () => {
         password: '',
     })
 
+    // Facebook Login
+    const handleFacebookSignIn = () => {
+        var facebookProvider = new firebase.auth.FacebookAuthProvider();
+        firebase.auth().signInWithPopup(facebookProvider).then(function(result) {
+            // This gives you a Facebook Access Token. You can use it to access the Facebook API.
+            var token = result.credential.accessToken;
+            // The signed-in user info.
+            var user = result.user;
+            user.success = true;
+            setUser(user)
+            setLoggedInUser(user)
+            history.replace(from)
+            // ...
+          }).catch(function(error) {
+            // Handle Errors here.
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            // The email of the user's account used.
+            var email = error.email;
+            // The firebase.auth.AuthCredential type that was used.
+            var credential = error.credential;
+            // ...
+        });
+    }
     
     // Google Login
     var googleProvider = new firebase.auth.GoogleAuthProvider();
@@ -167,7 +191,7 @@ const Login = () => {
     
     return (
         <Container>
-            <NavigationBar background="white"></NavigationBar>
+            <NavigationBar hasEmail={user.email} background="white"></NavigationBar>
             <p>Signed In User Email: {user.email}</p>
             <p>Signed In User Name: {user.name}</p>
             <div className="login-form-container">
@@ -195,7 +219,7 @@ const Login = () => {
                 <br />
                 <button className="alternative-login-button" onClick={handleGoogleSignIn}>Continue with Google</button>
                 <br />
-                <button className="alternative-login-button" onClick={handleGoogleSignIn}>Continue with Google</button>
+                <button className="alternative-login-button" onClick={handleFacebookSignIn}>Continue with Facebook</button>
             </div>
         </Container>
     );

@@ -39,6 +39,9 @@ const NavigationBar = (props) => {
                         <li>
                             <Link style={textColor} className="nav-menu-item">Login</Link>
                         </li>
+                        {/* {
+                            props.hasEmail ? <li><Link style={textColor} className="nav-menu-item">Login</Link></li> : <li><Link style={textColor} className="nav-menu-item">Login</Link></li>
+                        } */}
                     </ul>
                 </nav>
             </div>     
