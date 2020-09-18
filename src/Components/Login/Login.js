@@ -87,18 +87,6 @@ const Login = () => {
         setUser(newUserInfo);
         console.log(newUserInfo);
     }
-
-    // Create Password Based Account
-    const handlePasswordBasedAccount = (event, email, password) => {
-        console.log(event.target)
-        firebase.auth().createUserWithEmailAndPassword(email, password)
-        .catch( error=> {
-            // Handle Errors here.
-            var errorCode = error.code;
-            var errorMessage = error.message;
-            // ...
-          });
-    }
     
     // Handle Blur
     const handleBlur = e => {
@@ -134,13 +122,56 @@ const Login = () => {
         }
     }
     
+    // Handling Form Submit
+    const handleFormSubmit = (e) => {
+        console.log(user.email, user.password)
+        if(newUser && user.email && user.password) {
+            firebase.auth().createUserWithEmailAndPassword(user.email , user.password)
+            .then( res => {
+                const newUserInfo = res.user;
+                newUserInfo.error = '';
+                newUserInfo.success = true;
+                setUser(newUserInfo);
+                setLoggedInUser(newUserInfo);
+                history.replace(from);
+            })
+            .catch( error=> {
+            // Handle Errors here.
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            console.log(errorCode, errorMessage)
+            // ...
+          });
+        }
+        if(!newUser && user.email && user.password) {
+            firebase.auth().signInWithEmailAndPassword(user.email, user.password)
+            .then(res => {
+                const newUserInfo = res.user;
+                newUserInfo.error = '';
+                newUserInfo.success = true;
+                setUser(newUserInfo);
+                setLoggedInUser(newUserInfo);
+                history.replace(from);
+            })
+            .catch(function(error) {
+                // Handle Errors here.
+                var errorCode = error.code;
+                var errorMessage = error.message;
+                console.log(errorCode, errorMessage)
+                // ...
+            });
+        }
+        e.preventDefault();
+
+    }
+    
     return (
         <Container>
             <NavigationBar background="white"></NavigationBar>
             <p>Signed In User Email: {user.email}</p>
             <p>Signed In User Name: {user.name}</p>
             <div className="login-form-container">
-                <form action="" className="booking-login-form" onSubmit="dosomething">
+                <form action="" className="booking-login-form" onSubmit={handleFormSubmit}>
                     <h4>{newUser ? "Create an Account" : "Login"}</h4>
                     {newUser?
                     <> 
@@ -157,7 +188,7 @@ const Login = () => {
                     <br/>
                     {newUser ? <input required onBlur={handleBlur} placeholder="Confirm Password" type="password" name="rePassword" className="re-password"/> : ""}
                     <br/>
-                    <input onClick={handlePasswordBasedAccount} className="submit-btn" type="submit" value={newUser? "Create Account" : "Login"} />
+                    <input className="submit-btn" type="submit" value={newUser? "Create Account" : "Login"} />
                     { newUser ? <p style={{textAlign: "center"}}>Already have an account? <button className="user-identifier-btn" onClick={handleUser}>Login</button></p>:<p style={{textAlign: "center"}}>Don't have an Account?<button className="user-identifier-btn" onClick={handleUser}>Create Account</button></p>}
                 </form>
                 <span className="login-options-divider"><hr />Or<hr /></span>
