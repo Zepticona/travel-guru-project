@@ -18,9 +18,14 @@
     padding-bottom: 50px;
 }
 .tour-spots-images img {
-    width: 190px;
+    width: 220px;
     height: 416px;
     background: linear-gradient(0.12deg, #000000 0.1%, rgba(0, 0, 0, 0) 69.96%);
     border-radius: 20px;
     margin-right: 20px;
+    transition: all .3s ease;
+}
+.tour-spots-images img:hover {
+    transform: scale(1.1);
+    border: 2px solid #F9A51A;
 }

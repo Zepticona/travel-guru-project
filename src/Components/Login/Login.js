@@ -181,7 +181,7 @@ const Login = () => {
                 // Handle Errors here.
                 var errorCode = error.code;
                 var errorMessage = error.message;
-                console.log(errorCode, errorMessage)
+                alert(errorMessage)
                 // ...
             });
         }
@@ -191,9 +191,7 @@ const Login = () => {
     
     return (
         <Container>
-            <NavigationBar hasEmail={user.email} background="white"></NavigationBar>
-            <p>Signed In User Email: {user.email}</p>
-            <p>Signed In User Name: {user.name}</p>
+            <NavigationBar activeUser={loggedInUser} background="white"></NavigationBar>
             <div className="login-form-container">
                 <form action="" className="booking-login-form" onSubmit={handleFormSubmit}>
                     <h4>{newUser ? "Create an Account" : "Login"}</h4>

@@ -10,7 +10,7 @@ const Booking = () => {
     const {tourLocation} = useParams();
     const history = useHistory();
     const handleBooking = () => {
-        history.push('/search')
+        history.push(`/${tourLocation}`)
     }
     return (
         <div className="home-container">
@@ -22,6 +22,7 @@ const Booking = () => {
                     </Col>
                     <Col md="6">
                         <div className="booking-form">
+                            <form onSubmit={handleBooking}>
                             <Form className="booking-input-form">
                                 <Form.Group as={Row} >
                                     <Form.Label className="booking-form-label" column sm={12}>
@@ -46,7 +47,7 @@ const Booking = () => {
                                             From
                                             </Form.Label>
                                             <Col sm={12}>
-                                            <Form.Control className="booking-form-input" type="Date" placeholder="Dhaka" />
+                                            <Form.Control id="trip-from" className="booking-form-input" type="Date" required />
                                             </Col>
                                         </Form.Group>
                                     </Col>
@@ -56,17 +57,18 @@ const Booking = () => {
                                             To
                                             </Form.Label>
                                             <Col sm={12}>
-                                            <Form.Control className="booking-form-input" type="Date" placeholder="Dhaka" />
+                                            <Form.Control id="trip-to" className="booking-form-input" type="Date" required />
                                             </Col>
                                         </Form.Group>
                                     </Col>
                                 </Row>
                                 <Row>
                                     <Col md="12">
-                                        <button onClick={handleBooking} style={{width: '100%'}} className="booking-btn">Start Booking</button>
+                                        <button type="submit" style={{width: '100%'}} className="booking-btn">Start Booking</button>
                                     </Col>
                                 </Row>
                             </Form>
+                            </form>
                         </div>
                     </Col>
                 </Row>

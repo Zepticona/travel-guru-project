@@ -1,0 +1,12 @@
+.single-hotel {
+    margin-left: -40px
+}
+.single-hotel p {
+    margin: 0;
+    padding: 0;
+    font-size: 14px;
+}
+.single-hotel h6 {
+    margin-bottom: 0;
+    margin-top: -6px;
+}

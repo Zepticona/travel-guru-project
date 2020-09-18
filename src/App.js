@@ -32,12 +32,12 @@ function App() {
         <Route path="/tourist-spots/:tourLocation">
           <Booking></Booking>
         </Route>
-        <PrivateRoute path="/search">
+        <PrivateRoute path="/:destination">
           <Search></Search>
         </PrivateRoute>
-        <Route path="/searchTest">
+        {/* <Route path="/searchTest">
           <Search></Search>
-        </Route>
+        </Route> */}
         <Route exact path="/">
           <Home></Home>
         </Route>
